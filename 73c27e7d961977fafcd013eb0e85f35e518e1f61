@@ -1,0 +1,36 @@
+Continue work for usage-spec-export / PR #7
+
+Current state
+- Draft PR open: https://github.com/maxandersen/jbang/pull/7
+- Branch: usage-spec-export
+- Commit on branch: 73c27e7d961977fafcd013eb0e85f35e518e1f61
+- Fork branch pushed to: realhaley/jbang:usage-spec-export
+
+Implemented
+- Added top-level `jbang usage` command in `src/main/java/dev/jbang/cli/Usage.java`
+- Added Usage KDL generator in `src/main/java/dev/jbang/cli/usage/UsageSpecGenerator.java`
+- Registered command in `src/main/java/dev/jbang/cli/JBang.java`
+- Added CLI docs page `docs/modules/cli/pages/jbang-usage.adoc`
+- Added nav entry in `docs/modules/cli/partials/nav-jbang.adoc`
+- Added focused test `src/test/java/dev/jbang/cli/usage/UsageSpecGeneratorTest.java`
+
+Important context
+- Repo has many unrelated modified/generated docs and other changes already present in working tree. Be careful to stage only the usage-spec work unless explicitly asked to include other changes.
+- I also updated JBang help section lists to include `usage` and `lock`, because `TestArguments.testHelpSections` failed otherwise.
+
+Testing status last checked
+- Passing targeted tests:
+  - `./gradlew test --tests dev.jbang.cli.TestArguments.testHelpSections`
+  - `./gradlew test --tests dev.jbang.cli.TestCatalogNearest`
+  - `./gradlew test --tests dev.jbang.cli.usage.UsageSpecGeneratorTest`
+- Full `./gradlew spotlessApply test` did not go clean. During earlier run it hit `TestCatalogNearest.testAddLocalImplicit` in the full suite while the isolated test/class passed, which looked flaky/network-dependent around implicit `jbangdev` catalog URL resolution. Reconfirm before changing code for that.
+
+Likely next steps
+- Rebase or refresh branch against latest target branch if needed
+- Re-run full test suite in a clean state and confirm whether the catalog test issue is still reproducible
+- Address review comments on PR #7
+- If changing generator behavior, verify docs/test expectations stay aligned
+
+Useful commands
+- Show note: `git notes show 73c27e7d961977fafcd013eb0e85f35e518e1f61`
+- Push notes if wanted: `git push <remote> refs/notes/*`
